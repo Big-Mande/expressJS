@@ -28,7 +28,12 @@ app.get('/',(request,response) => {
     response.send('<h1>wuss good bb</h1>')
 });
 
-
+app.get('/info', (request, response) => {
+    const numPeople = people.length;
+    const time = new Date();
+    response.send(`<p>Phonebook has info for ${numPeople} people.</p>
+                    <p>${time}</p>`)
+})
 
 app.get('/api/persons', (request, response) => {
     response.send(JSON.stringify(people))
