@@ -1,9 +1,10 @@
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 // this json parser functions by transforming the json into a Javascript object
 // which is then attached to the body property of the request before the route handler is called. 
 app.use(express.json());
-
+app.use(morgan('tiny'));
 let people = [
     { 
       "id": 1,
