@@ -1,10 +1,16 @@
 const express = require('express');
+//add in morgan middleware to log requests made to server
 const morgan = require('morgan');
 const app = express();
 // this json parser functions by transforming the json into a Javascript object
 // which is then attached to the body property of the request before the route handler is called. 
 app.use(express.json());
-app.use(morgan('tiny'));
+// config morgan to log using the tiny config along with POST request data
+morgan.token('data', function (req, res) { var name = JSON.stringify(req.name);
+                                           var num = JSON.stringify(req.number);
+                                           return (`${name}, ${num}`);
+})
+app.use(morgan('tiny :data'));
 let people = [
     { 
       "id": 1,
