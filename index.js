@@ -5,12 +5,17 @@ const app = express();
 // this json parser functions by transforming the json into a Javascript object
 // which is then attached to the body property of the request before the route handler is called. 
 app.use(express.json());
-// config morgan to log using the tiny config along with POST request data
-morgan.token('data', function (req, res) { var name = JSON.stringify(req.name);
-                                           var num = JSON.stringify(req.number);
-                                           return (`${name}, ${num}`);
-})
-app.use(morgan('tiny :data'));
+// config a lil custom token for morgan
+morgan.token("data", (req, res) => {
+  const { body } = req;
+
+  return JSON.stringify(body);
+});
+
+// kk now we tell m0rgan to how we want it to log stuff
+// here we tell the server to use morgan with the config we want :D
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'));
+
 let people = [
     { 
       "id": 1,
